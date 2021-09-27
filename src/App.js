@@ -4,8 +4,7 @@ import countdown from "countdown";
 import moment from "moment-timezone";
 import { IoTriangleOutline, IoCloseOutline } from "react-icons/io5";
 import { BiSquare, BiCircle } from "react-icons/bi";
-
-const hostname = window.location.hostname.indexOf(":") ? "./puzzle/" : "./";
+const hostname = window.location.hostname === "localhost" ? "./puzzle/" : "./";
 const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
