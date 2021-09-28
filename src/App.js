@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import countdown from "countdown";
 import moment from "moment-timezone";
 import { IoTriangleOutline, IoCloseOutline } from "react-icons/io5";
 import { BiSquare, BiCircle } from "react-icons/bi";
+import { RiEyeLine } from "react-icons/ri";
 const hostname = window.location.hostname === "localhost" ? "./puzzle/" : "./";
 const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     background-color:#f7f7f7;
+    max-width: 600px;
   }
 `;
 const StyledApp = styled.div`
@@ -17,6 +19,7 @@ const StyledApp = styled.div`
   header {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     height: 50px;
     background: #fff;
@@ -38,7 +41,7 @@ const StyledApp = styled.div`
     font-size: 18px;
     color: #383838;
   }
-  .anser {
+  .answer {
     font-size: 22px;
     letter-spacing: 6px;
     width: 100%;
@@ -66,6 +69,16 @@ const StyledApp = styled.div`
     font-size: 22px;
     letter-spacing: 2px;
   }
+  .subtitle-lose {
+    width: 80%;
+    margin: 0 auto 40px auto;
+    color: #ff6161;
+    font-family: "Gemunu Libre", sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-align: center;
+  }
   .question {
     padding: 15px 40px;
     width: 80%;
@@ -78,14 +91,14 @@ const StyledApp = styled.div`
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    &:last-child {
+    &.answer {
       margin: 15px auto 50px auto;
     }
     .sing {
       font-size: 32px;
     }
     .mos {
-      width: 50%;
+      max-width: 50%;
     }
     font-size: 18px;
     .svg-IoCloseOutline {
@@ -108,22 +121,62 @@ const StyledApp = styled.div`
       height: 32px;
       fill: #000;
     }
+    .svg-RiEyeLine {
+      width: 32px;
+      height: 32px;
+      fill: #000;
+    }
     img {
       height: 100%;
     }
+  }
+  .input {
+    position: relative;
+    width: 80%;
+    margin: 30px auto 50px auto;
+  }
+  input::placeholder {
+    color: #c1c1c1;
+  }
+  input {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    border: 0;
+    padding: 16px 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: unset;
+    background: #dcdcdc;
+    color: #383838;
+  }
+  button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: "Gemunu Libre", sans-serif;
+    color: #383838;
+    font-size: 18px;
+    border-radius: 6px;
+    border: 0;
+    box-sizing: border-box;
+    padding: 6px 12px;
+    background: #fff;
   }
 `;
 function App() {
   const [countdownDate, setCountdownDate] = useState("loading...");
   const [timesup, setTimesup] = useState(false);
+  const inputRef = useRef(null);
   useEffect(() => {
     const interval = setInterval(() => {
-      const endDate = new Date(2021, 9, 7, 13, 30, 0);
+      const endDate = new Date(2021, 9, 7, 14, 0, 0);
       const update = countdown(new Date(), endDate, 0);
       const now = new Date();
       if (moment(update.end).isBefore(now)) {
-        alert(`Time's up!`);
-        setCountdownDate(`Time's up!`);
+        alert(`Time's up! you lose!!`);
+        setCountdownDate(`--:--:--`);
         setTimesup(true);
         clearInterval(interval);
         return;
@@ -150,6 +203,11 @@ function App() {
             <div>IBKI</div>
           </div>
           <div className="question">
+            <RiEyeLine className="svg-RiEyeLine" />
+            <div className="sing">＝</div>
+            <div>a, b, d, w</div>
+          </div>
+          <div className="question">
             <IoCloseOutline className="svg-IoCloseOutline" />
             <div className="sing">＝</div>
             <div>人一田日</div>
@@ -162,23 +220,54 @@ function App() {
           <div className="question">
             <BiSquare className="svg-BiSquare" />
             <div className="sing">＝</div>
-            <div className="mos">... --.- ..- .. -.. --. .- -- . </div>
+            <div className="mos">.-. --- --- --</div>
           </div>
         </>
       )}
-      <p className="subtitle">Anser:</p>
-      <div className="question">
-        {timesup ? (
-          <div className="anser">A會議室</div>
-        ) : (
-          <>
-            <IoTriangleOutline className="svg-IoTriangleOutline" />
-            <IoCloseOutline className="svg-IoCloseOutline" />
-            <BiCircle className="svg-BiCircle" />
-            <BiSquare className="svg-BiSquare" />
-          </>
-        )}
+      <p className="subtitle">Answer:</p>
+      <div className="question answer">
+        <IoTriangleOutline className="svg-IoTriangleOutline" />
+        <IoCloseOutline className="svg-IoCloseOutline" />
+        <BiCircle className="svg-BiCircle" />
+        <BiSquare className="svg-BiSquare" />
       </div>
+      {timesup ? (
+        <p className="subtitle-lose">Time's up You lose!!</p>
+      ) : (
+        <>
+          <p className="subtitle">Try to submit the answer:</p>
+          <div className="input">
+            <input ref={inputRef} placeholder={"try to typing"} />
+            <button
+              onClick={() => {
+                const value = inputRef.current.value;
+                const isAnswerMatch = () => {
+                  switch (value) {
+                    case decodeURIComponent("A%E6%9C%83%E8%AD%B0%E5%AE%A4"):
+                    case decodeURIComponent("a%E6%9C%83%E8%AD%B0%E5%AE%A4"):
+                    case decodeURIComponent("A%E6%9C%83%E8%AD%B0room"):
+                    case decodeURIComponent("a%E6%9C%83%E8%AD%B0room"):
+                      return true;
+                    default:
+                      return false;
+                  }
+                };
+                if (isAnswerMatch()) {
+                  alert(
+                    `恭喜答對！ 請到『${decodeURIComponent(
+                      "A%E6%9C%83%E8%AD%B0%E5%AE%A4"
+                    )}』贖回遺失物`
+                  );
+                } else {
+                  alert("哭哭 答錯了哦~!");
+                }
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </>
+      )}
     </StyledApp>
   );
 }
