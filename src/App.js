@@ -5,6 +5,7 @@ import moment from "moment-timezone";
 import { IoTriangleOutline, IoCloseOutline } from "react-icons/io5";
 import { BiSquare, BiCircle } from "react-icons/bi";
 import { RiEyeLine } from "react-icons/ri";
+import { decodeX, decodeS } from "./contact";
 const hostname = window.location.hostname === "localhost" ? "./puzzle/" : "./";
 const GlobalStyle = createGlobalStyle`
   body {
@@ -243,21 +244,15 @@ function App() {
                 const value = inputRef.current.value;
                 const isAnswerMatch = () => {
                   switch (value) {
-                    case decodeURIComponent("A%E6%9C%83%E8%AD%B0%E5%AE%A4"):
-                    case decodeURIComponent("a%E6%9C%83%E8%AD%B0%E5%AE%A4"):
-                    case decodeURIComponent("A%E6%9C%83%E8%AD%B0room"):
-                    case decodeURIComponent("a%E6%9C%83%E8%AD%B0room"):
+                    case decodeS():
+                    case decodeX():
                       return true;
                     default:
                       return false;
                   }
                 };
                 if (isAnswerMatch()) {
-                  alert(
-                    `恭喜答對！ 請到『${decodeURIComponent(
-                      "A%E6%9C%83%E8%AD%B0%E5%AE%A4"
-                    )}』贖回遺失物`
-                  );
+                  alert(`恭喜答對！ 請到『${decodeX()}』贖回遺失物`);
                 } else {
                   alert("哭哭 答錯了哦~!");
                 }
