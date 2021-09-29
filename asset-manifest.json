@@ -1,13 +1,9 @@
 {
   "files": {
     "main.js": "/puzzle/static/js/main.ff77c66f.chunk.js",
-    "main.js.map": "/puzzle/static/js/main.ff77c66f.chunk.js.map",
     "runtime-main.js": "/puzzle/static/js/runtime-main.a309ad2f.js",
-    "runtime-main.js.map": "/puzzle/static/js/runtime-main.a309ad2f.js.map",
     "static/js/2.f9158fe7.chunk.js": "/puzzle/static/js/2.f9158fe7.chunk.js",
-    "static/js/2.f9158fe7.chunk.js.map": "/puzzle/static/js/2.f9158fe7.chunk.js.map",
     "static/js/3.3c9ca58c.chunk.js": "/puzzle/static/js/3.3c9ca58c.chunk.js",
-    "static/js/3.3c9ca58c.chunk.js.map": "/puzzle/static/js/3.3c9ca58c.chunk.js.map",
     "index.html": "/puzzle/index.html",
     "static/js/2.f9158fe7.chunk.js.LICENSE.txt": "/puzzle/static/js/2.f9158fe7.chunk.js.LICENSE.txt"
   },
