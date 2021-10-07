@@ -192,7 +192,7 @@ function App() {
     <StyledApp>
       <GlobalStyle />
       <header>
-        <span>Welecome</span>
+        <span>Welcome</span>
       </header>
       {!timesup && (
         <>
