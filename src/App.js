@@ -172,7 +172,7 @@ function App() {
   const inputRef = useRef(null);
   useEffect(() => {
     const interval = setInterval(() => {
-      const endDate = new Date(2021, 9, 7, 14, 0, 0);
+      const endDate = new Date(2022, 9, 7, 14, 0, 0);
       const update = countdown(new Date(), endDate, 0);
       const now = new Date();
       if (moment(update.end).isBefore(now)) {
